@@ -1,53 +1,36 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Portfolio of Alex Morgan, a digital designer and developer." />
-    <title>Alex Morgan — Designer & Developer</title>
-    <style>
-      :root { --ink:#172033; --muted:#697386; --paper:#f8f7f4; --accent:#ff6b4a; --line:#e8e5de; font-family:Inter,ui-sans-serif,system-ui,sans-serif; color:var(--ink); background:var(--paper); }
-      * { box-sizing:border-box; } html { scroll-behavior:smooth; } body { margin:0; background:var(--paper); } a { color:inherit; text-decoration:none; }
-      .shell { width:min(1120px,calc(100% - 3rem)); margin:auto; }
-      nav { display:flex; justify-content:space-between; align-items:center; padding:1.65rem 0; font-size:.9rem; }
-      .logo { display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:-.03em; }
-      .logo-mark { width:1.75rem; height:1.75rem; display:grid; place-items:center; border-radius:50%; background:var(--ink); color:#fff; font-size:.78rem; }
-      .nav-links { display:flex; gap:1.5rem; color:#4b5565; } .nav-links a:hover { color:var(--accent); }
-      .contact { padding:.62rem .95rem; border:1px solid var(--ink); border-radius:999px; font-weight:700; transition:.2s; } .contact:hover { background:var(--ink); color:#fff; }
-      .hero { display:grid; grid-template-columns:1.15fr .85fr; gap:3rem; align-items:end; min-height:calc(100vh - 5.4rem); padding:5rem 0 6rem; }
-      .eyebrow { margin:0 0 1.25rem; color:var(--accent); font-weight:800; font-size:.78rem; letter-spacing:.13em; text-transform:uppercase; }
-      h1 { max-width:10ch; margin:0; font-size:clamp(3.5rem,8vw,6.9rem); line-height:.92; letter-spacing:-.075em; }
-      .hero-copy { max-width:37rem; margin:2rem 0 0; color:var(--muted); font-size:1.12rem; line-height:1.7; }
-      .actions { display:flex; flex-wrap:wrap; gap:.8rem; margin-top:2rem; }
-      .button { display:inline-flex; align-items:center; gap:.45rem; padding:.85rem 1.2rem; border-radius:999px; font-weight:750; transition:transform .2s,background .2s; } .button:hover { transform:translateY(-2px); }
-      .button-primary { background:var(--ink); color:#fff; } .button-primary:hover { background:var(--accent); } .button-text { border:1px solid #d2cec5; }
-      .portrait { position:relative; aspect-ratio:4/5; max-height:36rem; overflow:hidden; border-radius:1.25rem; background:linear-gradient(145deg,#f4c7b8,#f1a187); }
-      .portrait::before { content:""; position:absolute; inset:12% 13% 0; border-radius:50% 50% 0 0; background:#d86450; box-shadow:0 0 0 2.5rem rgba(255,255,255,.23); }
-      .portrait::after { content:"AM"; position:absolute; bottom:1.5rem; right:1.5rem; width:4.2rem; aspect-ratio:1; display:grid; place-items:center; border-radius:50%; background:var(--ink); color:#fff; font-weight:800; letter-spacing:-.05em; }
-      .stamp { position:absolute; z-index:1; top:1.5rem; left:-1rem; width:7rem; aspect-ratio:1; display:grid; place-items:center; padding:1rem; border-radius:50%; background:#fff; color:var(--accent); text-align:center; font-size:.72rem; font-weight:800; line-height:1.1; transform:rotate(-13deg); box-shadow:0 .5rem 2rem rgba(23,32,51,.1); }
-      section { padding:6rem 0; border-top:1px solid var(--line); } .section-head { display:flex; justify-content:space-between; align-items:end; gap:2rem; margin-bottom:2.5rem; }
-      h2 { max-width:12ch; margin:0; font-size:clamp(2.2rem,4.3vw,4rem); line-height:1; letter-spacing:-.06em; } .section-note { max-width:23rem; color:var(--muted); line-height:1.6; }
-      .projects { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; } .project { min-height:25rem; padding:1.35rem; display:flex; flex-direction:column; justify-content:flex-end; border-radius:1rem; overflow:hidden; transition:transform .25s; } .project:hover { transform:translateY(-.35rem); }
-      .project:nth-child(1) { background:#c9dbeb; } .project:nth-child(2) { background:#f2d091; } .project:nth-child(3) { background:#d0cfec; }
-      .project-art { flex:1; display:grid; place-items:center; font-size:clamp(4rem,9vw,7rem); font-weight:900; letter-spacing:-.12em; color:rgba(23,32,51,.78); }
-      .project-info { display:flex; justify-content:space-between; gap:1rem; align-items:end; } .project h3 { margin:0; font-size:1.15rem; letter-spacing:-.035em; } .project span { display:block; margin-top:.25rem; color:#4b5565; font-size:.8rem; }
-      .arrow { width:2.35rem; aspect-ratio:1; display:grid; place-items:center; border-radius:50%; background:rgba(255,255,255,.7); font-size:1.2rem; }
-      .about { display:grid; grid-template-columns:.8fr 1.2fr; gap:4rem; } .about p { margin:0; max-width:34rem; font-size:clamp(1.35rem,2.5vw,2rem); line-height:1.4; letter-spacing:-.035em; } .about small { display:block; margin-top:1.5rem; color:var(--muted); font-size:.95rem; line-height:1.7; }
-      footer { padding:2.2rem 0; border-top:1px solid var(--line); display:flex; justify-content:space-between; color:var(--muted); font-size:.85rem; } footer a { color:var(--ink); font-weight:700; }
-      @media (max-width:760px) { .shell { width:min(100% - 2rem,1120px); } .nav-links { display:none; } .hero { grid-template-columns:1fr; padding:3.5rem 0 4rem; min-height:auto; } .portrait { max-width:28rem; width:88%; justify-self:end; } .projects { grid-template-columns:1fr; } .project { min-height:18rem; } .about { grid-template-columns:1fr; gap:1.5rem; } section { padding:4rem 0; } .section-head { display:block; } .section-note { margin-top:1rem; } }
-    </style>
-  </head>
-  <body>
-    <header class="shell"><nav aria-label="Main navigation"><a class="logo" href="#top"><span class="logo-mark">AM</span>Alex Morgan</a><div class="nav-links"><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></div><a class="contact" href="mailto:hello@alexmorgan.design">Let’s talk ↗</a></nav></header>
-    <main id="top">
-      <div class="shell hero"><div><p class="eyebrow">Independent designer & developer</p><h1>Ideas made tangible.</h1><p class="hero-copy">I help ambitious people and brands turn their sharpest ideas into digital experiences with clarity, character, and purpose.</p><div class="actions"><a class="button button-primary" href="#work">View selected work <span>↓</span></a><a class="button button-text" href="#about">More about me</a></div></div><div class="portrait" aria-label="Abstract portrait placeholder"><span class="stamp">Available for<br>select projects</span></div></div>
-      <section id="work"><div class="shell"><div class="section-head"><h2>Selected work</h2><p class="section-note">A few recent collaborations across brand, product, and the web.</p></div><div class="projects">
-        <a class="project" href="#project-one"><div class="project-art">ARC</div><div class="project-info"><div><h3>Arc Studio</h3><span>Identity · Digital</span></div><b class="arrow">↗</b></div></a>
-        <a class="project" href="#project-two"><div class="project-art">NOA</div><div class="project-info"><div><h3>Noa Market</h3><span>Commerce · Web Design</span></div><b class="arrow">↗</b></div></a>
-        <a class="project" href="#project-three"><div class="project-art">W/</div><div class="project-info"><div><h3>Wander Journal</h3><span>Editorial · Product</span></div><b class="arrow">↗</b></div></a>
-      </div></div></section>
-      <section id="about"><div class="shell about"><p class="eyebrow">A little about me</p><div><p>I’m a multidisciplinary creative based in New York, working where thoughtful design and useful technology meet.</p><small>My approach is simple: listen closely, find the essential idea, then make it feel inevitable. I partner with founders, teams, and cultural organizations around the world.</small></div></div></section>
-    </main>
-    <footer class="shell" id="contact"><span>© 2026 Alex Morgan</span><a href="mailto:hello@alexmorgan.design">hello@alexmorgan.design ↗</a></footer>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Evance Odero, a data analyst and software developer.">
+  <title>Evance Odero — Data Analyst & Developer</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0c1b2d; --ink:#e5eef7; --muted:#96aabd; --mint:#36e0ad; --line:#1c3650; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); }
+    * { box-sizing:border-box; } html { scroll-behavior:smooth; } body { margin:0; background:radial-gradient(circle at 78% 0,#123552 0,transparent 31rem),var(--bg); } a { color:inherit; text-decoration:none; }
+    .shell { width:min(1120px,calc(100% - 3rem)); margin:auto; }
+    nav,footer { display:flex; justify-content:space-between; align-items:center; } nav { padding:1.65rem 0; font-size:.9rem; }
+    .logo { display:flex; align-items:center; gap:.65rem; font-weight:800; letter-spacing:-.03em; }.logo-mark { width:1.8rem; aspect-ratio:1; display:grid; place-items:center; border-radius:.4rem; background:var(--mint); color:var(--bg); font-size:.72rem; }
+    .links { display:flex; gap:1.5rem; color:var(--muted); }.links a:hover { color:var(--mint); }.contact { padding:.62rem .95rem; border:1px solid var(--mint); border-radius:.4rem; color:var(--mint); font-weight:750; transition:.2s; }.contact:hover { background:var(--mint); color:var(--bg); }
+    .hero { display:grid; grid-template-columns:1.15fr .85fr; gap:3rem; align-items:end; min-height:calc(100vh - 5.4rem); padding:5rem 0 6rem; }.eyebrow { margin:0 0 1.25rem; color:var(--mint); font:750 .78rem ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:.11em; text-transform:uppercase; }
+    h1 { max-width:11ch; margin:0; font-size:clamp(3.3rem,7.7vw,6.6rem); line-height:.93; letter-spacing:-.075em; }.copy { max-width:37rem; margin:2rem 0 0; color:var(--muted); font-size:1.1rem; line-height:1.7; }.actions { display:flex; flex-wrap:wrap; gap:.8rem; margin-top:2rem; }.button { padding:.85rem 1.2rem; border-radius:.35rem; font-weight:750; transition:transform .2s,background .2s; }.button:hover { transform:translateY(-2px); }.primary { background:var(--mint); color:var(--bg); }.secondary { border:1px solid #31516b; }
+    .visual { position:relative; aspect-ratio:4/5; max-height:35rem; overflow:hidden; border:1px solid #255171; border-radius:.7rem; background:linear-gradient(160deg,#0d2941,#0a1727); }.grid { position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent 0 39px,rgba(54,224,173,.08) 40px),repeating-linear-gradient(0deg,transparent 0 39px,rgba(54,224,173,.08) 40px); }.visual h2 { position:absolute; z-index:1; inset:19% 13%; display:grid; align-items:center; margin:0; border-left:3px solid var(--mint); padding-left:1rem; color:var(--mint); white-space:pre-line; font:800 clamp(1.7rem,4vw,3rem)/1.15 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:-.08em; }.stack { position:absolute; z-index:1; bottom:1.5rem; left:1.5rem; padding:.65rem .8rem; border:1px solid #255171; border-radius:.35rem; background:var(--panel); color:var(--mint); font:700 .72rem/1.4 ui-monospace,SFMono-Regular,Consolas,monospace; }
+    section { border-top:1px solid var(--line); padding:6rem 0; }.section-head { display:flex; justify-content:space-between; align-items:end; gap:2rem; margin-bottom:2.5rem; }.section-head h2 { max-width:13ch; margin:0; font-size:clamp(2.2rem,4.3vw,4rem); line-height:1; letter-spacing:-.06em; }.note { max-width:25rem; color:var(--muted); line-height:1.6; }
+    .projects { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }.project { min-height:24rem; padding:1.35rem; display:flex; flex-direction:column; justify-content:flex-end; border:1px solid #1d3b55; border-radius:.7rem; background:var(--panel); transition:transform .25s,border-color .25s; }.project:hover { transform:translateY(-.35rem); border-color:var(--mint); }.project-code { flex:1; display:grid; place-items:center; color:var(--mint); font:800 clamp(2rem,5vw,4rem) ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:-.12em; }.project-info { display:flex; justify-content:space-between; gap:1rem; align-items:end; }.project h3 { margin:0; letter-spacing:-.035em; }.project span { display:block; margin-top:.3rem; color:var(--muted); font-size:.8rem; }.arrow { width:2.35rem; aspect-ratio:1; display:grid; place-items:center; border-radius:.35rem; background:#183852; color:var(--mint); }
+    .about { display:grid; grid-template-columns:.8fr 1.2fr; gap:4rem; }.about p { max-width:35rem; margin:0; font-size:clamp(1.35rem,2.5vw,2rem); line-height:1.4; letter-spacing:-.035em; }.about small { display:block; max-width:35rem; margin-top:1.5rem; color:var(--muted); font-size:.95rem; line-height:1.7; }
+    footer { padding:2.2rem 0; border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; }footer a { color:var(--mint); font-weight:700; }
+    @media(max-width:760px){.shell{width:min(100% - 2rem,1120px)}.links{display:none}.hero{grid-template-columns:1fr;min-height:auto;padding:3.5rem 0 4rem}.visual{max-width:28rem;width:88%;justify-self:end}.projects{grid-template-columns:1fr}.project{min-height:18rem}.about{grid-template-columns:1fr;gap:1.5rem}section{padding:4rem 0}.section-head{display:block}.note{margin-top:1rem}}
+  </style>
+</head>
+<body>
+  <header class="shell"><nav><a class="logo" href="#top"><span class="logo-mark">EO</span>Evance Odero</a><div class="links"><a href="#work">Projects</a><a href="#about">About</a><a href="#contact">Contact</a></div><a class="contact" href="mailto:oderoevance1003@gmail.com">Let's talk ↗</a></nav></header>
+  <main id="top">
+    <div class="shell hero"><div><p class="eyebrow">Data analyst · Software developer</p><h1>Turning data into decisions.</h1><p class="copy">I build reliable software and uncover the story behind complex data—helping teams measure what matters, move faster, and make better decisions.</p><div class="actions"><a class="button primary" href="#work">Explore projects ↓</a><a class="button secondary" href="#about">About my work</a></div></div><div class="visual" aria-label="Analytics and development graphic"><div class="grid"></div><h2>ANALYZE
+BUILD
+SHIP</h2><span class="stack">Python · SQL · JavaScript<br>Power BI · Cloud<br>C++  EPI info</span></div></div>
+    <section id="work"><div class="shell"><div class="section-head"><h2>Selected projects</h2><p class="note">Data products and software built to turn operational questions into clear, usable answers.</p></div><div class="projects"><a class="project" href="#project-one"><div class="project-code">01/</div><div class="project-info"><div><h3>Revenue Intelligence</h3><span>SQL · Python · Power BI</span></div><b class="arrow">↗</b></div></a><a class="project" href="#project-two"><div class="project-code">02/</div><div class="project-info"><div><h3>Forecasting Platform</h3><span>Python · APIs · Cloud</span></div><b class="arrow">↗</b></div></a><a class="project" href="#project-three"><div class="project-code">03/</div><div class="project-info"><div><h3>Operations Dashboard</h3><span>React · Node · Analytics</span></div><b class="arrow">↗</b></div></a></div></div></section>
+    <section id="about"><div class="shell about"><p class="eyebrow">A little about me</p><div><p>I bridge the gap between raw information and production-ready software.</p><small>My work combines analytical rigor with practical engineering: defining metrics, shaping clean data models, automating repeatable workflows, and building tools people genuinely enjoy using.</small></div></div></section>
+  </main>
+  <footer class="shell" id="contact"><span>© 2026 Evance Odero</span><a href="mailto:oderoevance1003@gmail.com">oderoevance1003@gmail.com ↗</a></footer>
+</body>
 </html>
