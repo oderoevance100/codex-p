@@ -1,103 +1,61 @@
-# Portfolio backend
+# Portfolio Backend System
 
-API for the "Order a service" and "Reviews" sections of the portfolio site.
-Plain Node.js + Express, organized into modules (routes → controllers →
-models), with data saved to JSON files on disk — no database server to set
-up.
+## Overview
 
-```
-backend/
-├── server.js                    entry point, wires everything together
-├── src/
-│   ├── routes/                  defines URLs, delegates to controllers
-│   │   ├── orders.routes.js
-│   │   └── reviews.routes.js
-│   ├── controllers/             request/response handling per resource
-│   │   ├── orders.controller.js
-│   │   └── reviews.controller.js
-│   ├── models/                  data shape + validation, no I/O
-│   │   ├── order.model.js
-│   │   └── review.model.js
-│   ├── middleware/
-│   │   ├── errorHandler.js
-│   │   └── notFound.js
-│   ├── utils/
-│   │   └── mailer.js            optional email-on-new-order
-│   └── db.js                    tiny JSON-file read/write helper
-├── data/
-│   ├── orders.json               created/updated automatically
-│   └── reviews.json              created/updated automatically
-└── public/                      index.html + services.html are served from here
-```
+This system provides a backend API for a portfolio website, specifically handling two key features: **service orders** and **client reviews**. Built with plain Node.js and Express, it's designed to be simple to set up and run without requiring a separate database server.
 
-## Run it
+## What It Does
 
-Requires Node.js 18+.
+### 1. Review Management
+- **Public Submission**: Anyone can submit a review with a name, rating (1-5), and comment
+- **Public Viewing**: Anyone can view all submitted reviews along with the average rating
+- **Data Storage**: Reviews are automatically saved to a JSON file
 
-```bash
-cd backend
-npm install
-cp .env.example .env      # then edit .env — at minimum set ADMIN_KEY
-npm start
-```
+### 2. Service Order Management
+- **Order Submission**: Clients can submit service requests with their contact details, desired service, timeline, and project description
+- **Private Administration**: Admins can view all submitted orders using a secret key
+- **Optional Email Notifications**: When configured with SMTP settings, the system can send email alerts about new orders
+- **Data Storage**: Orders are automatically saved to a JSON file
 
-Open **http://localhost:3000** — that's the site itself (served from
-`public/`), already wired up to the API on the same origin, so nothing
-else needs configuring for it to work locally.
+### 3. Health Monitoring
+- A simple health check endpoint to verify the system is running
 
-For live development with auto-restart: `npm run dev`.
+## System Structure
 
-## Email on new orders (optional)
+The application follows a clean, modular architecture:
 
-Without SMTP settings in `.env`, every order request is still saved to
-`data/orders.json` — you just won't get an email. To get emailed:
+### Entry Point
+- `server.js` - Wires everything together and starts the Express server
 
-1. Fill in `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` in `.env`.
-2. For Gmail: turn on 2-Step Verification, then create an **App Password**
-   (Google Account → Security → App passwords) and use that as `SMTP_PASS`,
-   not your normal Gmail password.
+### Core Components
+- **Routes** (`src/routes/`) - Define URL endpoints and delegate to controllers
+- **Controllers** (`src/controllers/`) - Handle request/response logic for each resource
+- **Models** (`src/models/`) - Define data structure and validation rules
+- **Middleware** (`src/middleware/`) - Handle errors and 404 responses
+- **Utilities** (`src/utils/`) - Optional email sending functionality
+- **Database Helper** (`src/db.js`) - Simple JSON file read/write operations
 
-## API
+### Data Storage
+- All data is stored in JSON files in the `data/` directory
+- No external database required - perfect for low-traffic or demonstration sites
 
-| Method | Path          | Auth               | Purpose                              |
-|--------|---------------|---------------------|---------------------------------------|
-| GET    | `/api/reviews`| —                   | List reviews + average rating         |
-| POST   | `/api/reviews`| —                   | Submit a review                       |
-| POST   | `/api/orders` | —                   | Submit a service request              |
-| GET    | `/api/orders` | `x-admin-key` header| List all submitted requests (private) |
-| GET    | `/api/health` | —                   | Liveness check                        |
+### Static Files
+- The `public/` directory serves the website's frontend files
 
-**POST /api/reviews** body:
-```json
-{ "name": "Jane", "rating": 5, "comment": "Great to work with." }
-```
+## Key Features
 
-**POST /api/orders** body:
-```json
-{
-  "name": "Jane",
-  "email": "jane@example.com",
-  "service": "Dashboard & BI build",
-  "timeline": "Within a month",
-  "details": "We need a live sales dashboard for..."
-}
-```
+- **No Database Setup**: Runs with file-based storage right out of the box
+- **Modular Design**: Clean separation of concerns makes the code easy to maintain
+- **Same-Origin API**: Frontend and API work together seamlessly
+- **Admin Protection**: Secure endpoint for viewing orders with a header-based authentication
+- **Optional Email Integration**: Can notify you about new orders via email
 
-**GET /api/orders** — to view submitted requests, send the header
-`x-admin-key: <value from your .env>`. Example:
-```bash
-curl -H "x-admin-key: your-secret-here" http://localhost:3000/api/orders
-```
+## Use Cases
 
-## Deploying
+This system is ideal for:
+- Personal portfolio websites
+- Freelancer service pages
+- Small business websites
+- Projects that need a simple backend without the complexity of a full database setup
 
-This is a plain Express app, so it runs on any Node host (Render, Railway,
-Fly.io, a VPS, etc.). Two things to change for production:
-
-1. **Storage**: JSON files work for low volume but aren't safe for
-   concurrent writes at scale, and most hosts wipe the filesystem on
-   redeploy. Swap `src/db.js` for a real database (Postgres, SQLite via a
-   proper driver, MongoDB…) when you outgrow this — nothing outside that
-   one file needs to change.
-2. **Environment variables**: set `ADMIN_KEY`, `OWNER_EMAIL`, and the SMTP
-   variables on the host instead of committing `.env`.
+The system is designed to be lightweight and easy to understand while being extensible enough to grow into a more robust solution if needed.
