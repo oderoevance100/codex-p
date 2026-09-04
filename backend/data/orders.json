@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": "mtmwwuswknhb9",
+    "name": "Evance Odero",
+    "email": "oderoevance2003@gmail.com",
+    "service": "Full-stack web app",
+    "timeline": "Urgent",
+    "details": "I want an ecomerce system",
+    "status": "new",
+    "date": "2026-09-04T12:10:34.352Z"
+  },
+  {
+    "id": "mtmy0udxx0eeg",
+    "name": "Hellen Atieno",
+    "email": "oderoevance2003@gmail.com",
+    "service": "Forecasting & automation",
+    "timeline": "Within a month",
+    "details": "I want a decision making tool",
+    "status": "new",
+    "date": "2026-09-04T12:41:40.053Z"
+  },
+  {
+    "id": "mtmy4mn8tgjby",
+    "name": "Otieno Vincent",
+    "email": "castrojuma7@gmail.com",
+    "service": "Data analysis & reporting",
+    "timeline": "Within two weeks",
+    "details": "I have data that should be analysed and report should be created as quick as posible",
+    "status": "new",
+    "date": "2026-09-04T12:44:36.644Z"
+  }
+]
