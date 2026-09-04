@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,380;9..144,460;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
   :root{
     --bg:#f6f3ec;
@@ -108,8 +109,12 @@
 
   /* ---------- about ---------- */
   .about{display:grid;grid-template-columns:.9fr 1.4fr;gap:3.5rem;}
-  .about-figure{aspect-ratio:3/4;border:1px solid var(--line);background:linear-gradient(155deg,#e9e2d0,var(--paper));display:flex;align-items:flex-end;padding:1.4rem;}
-  .about-figure span{font-family:"Fraunces",serif;font-style:italic;color:var(--ink-soft);font-size:1rem;}
+  .about-figure{position:relative;aspect-ratio:3/4;border:1px solid var(--line);background:#e9e2d0;overflow:hidden;}
+  #locate-map{position:absolute;inset:0;filter:sepia(12%) saturate(85%) brightness(101%);}
+  .about-figure .map-caption{position:absolute;left:1.4rem;bottom:1.4rem;z-index:401;background:var(--paper);border:1px solid var(--line);padding:.55rem .8rem;border-radius:2px;pointer-events:none;}
+  .about-figure .map-caption span{display:block;font-family:"Fraunces",serif;font-style:italic;color:var(--ink-soft);font-size:.92rem;}
+  .about-figure .map-caption b{display:block;font-family:"IBM Plex Sans";font-weight:500;font-size:.95rem;color:var(--ink);}
+  .leaflet-control-attribution{font-size:.62rem !important;}
   .about p.lead{font-size:clamp(1.25rem,2vw,1.55rem);line-height:1.55;font-weight:400;color:var(--ink);margin:0;}
   .about p.body{color:var(--ink-soft);line-height:1.75;margin-top:1.3rem;max-width:38rem;}
   .about-facts{margin-top:2rem;display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem 2rem;}
@@ -296,7 +301,10 @@
 
   <section id="about">
     <div class="shell about">
-      <div class="about-figure"><span>Based in Kenya, working with teams anywhere.</span></div>
+      <div class="about-figure">
+        <div id="locate-map" role="img" aria-label="Map showing Eldoret, Kenya"></div>
+        <div class="map-caption"><b>Eldoret, Kenya</b><span>Working with teams anywhere.</span></div>
+      </div>
       <div>
         <p class="lead">I care less about which tool is trendiest and more about whether the person using what I built can trust the number on the screen.</p>
         <p class="body">That means treating data work and software work as one discipline rather than two: a dashboard is only as good as the pipeline feeding it, and a pipeline is only useful if someone can actually read what it produces. I move between analysis and engineering depending on which side of that a project needs most — defining a metric one day, debugging an API integration the next.</p>
@@ -315,6 +323,30 @@
   <a href="mailto:oderoevance1003@gmail.com">oderoevance1003@gmail.com</a>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+  // Eldoret, Kenya
+  const ELDORET = [0.5143, 35.2698];
+  const mapEl = document.getElementById('locate-map');
+  if (mapEl && window.L) {
+    const map = L.map('locate-map', {
+      zoomControl: false,
+      scrollWheelZoom: false,
+      attributionControl: true
+    }).setView(ELDORET, 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    L.marker(ELDORET).addTo(map)
+      .bindPopup('Eldoret, Kenya')
+      .openPopup();
+  }
+</script>
 <script>
   // single page-load moment: draw the sparkline in once
   const path = document.getElementById('sparkline-path');
