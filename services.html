@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Order data analysis, dashboard and development services from Evance Odero, and read or leave client reviews.">
+<title>Services &amp; Reviews — Evance Odero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,380;9..144,460;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f3ec;
+    --paper:#fffdf8;
+    --ink:#1c1a16;
+    --ink-soft:#54503f;
+    --line:#ddd5c2;
+    --rule:#c9bfa4;
+    --clay:#b5502e;
+    --moss:#4c5c3f;
+    --gold:#c98a1f;
+    --slate:#3d4c5c;
+    font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);}
+  a{color:inherit;}
+  .shell{width:min(1080px,calc(100% - 3rem));margin:0 auto;}
+  h1,h2,h3{font-family:"Fraunces",Georgia,serif;letter-spacing:-.01em;margin:0;}
+
+  header{border-bottom:1px solid var(--line);}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 0;font-size:.94rem;}
+  .mark{font-family:"Fraunces",serif;font-weight:600;font-size:1.15rem;}
+  .mark span{color:var(--clay);}
+  .links{display:flex;gap:2rem;}
+  .links a{color:var(--ink-soft);border-bottom:1px solid transparent;padding-bottom:.15rem;transition:border-color .15s,color .15s;}
+  .links a:hover,.links a.active{color:var(--ink);border-color:var(--clay);}
+  .talk{font-weight:500;color:var(--clay);}
+  .talk:hover{text-decoration:underline;}
+
+  .page-hero{padding:4rem 0 3rem;}
+  .kicker{font-size:1rem;color:var(--ink-soft);margin:0 0 1rem;}
+  h1{font-size:clamp(2.4rem,4.6vw,3.4rem);line-height:1.08;font-weight:460;max-width:18ch;}
+  .lede{max-width:38rem;margin:1.4rem 0 0;color:var(--ink-soft);font-size:1.08rem;line-height:1.7;}
+
+  section{padding:4.5rem 0;border-top:1px solid var(--line);}
+  .head-row{display:grid;grid-template-columns:.75fr 1.25fr;gap:2.5rem;margin-bottom:2.8rem;}
+  .head-row h2{font-size:clamp(1.8rem,3.2vw,2.4rem);font-weight:460;max-width:14ch;}
+  .head-row .note{color:var(--ink-soft);line-height:1.7;max-width:34rem;margin:0;}
+
+  /* ---------- services ---------- */
+  .services{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;}
+  .service{border:1px solid var(--line);background:var(--paper);padding:1.6rem;display:flex;flex-direction:column;gap:.9rem;}
+  .service h3{font-size:1.25rem;font-weight:460;}
+  .service p{margin:0;color:var(--ink-soft);line-height:1.65;font-size:.95rem;flex:1;}
+  .service-meta{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:.8rem;}
+  .service-meta b{color:var(--ink);font-weight:500;}
+  .pick-btn{font-size:.85rem;font-weight:500;color:var(--clay);border-bottom:1px solid var(--rule);padding-bottom:1px;background:none;border-left:none;border-right:none;border-top:none;cursor:pointer;font-family:inherit;}
+  .pick-btn:hover{border-color:var(--clay);}
+
+  /* ---------- form shared ---------- */
+  .form-panel{border:1px solid var(--line);background:var(--paper);padding:2rem;}
+  label{display:block;font-size:.85rem;font-weight:500;margin-bottom:.4rem;color:var(--ink);}
+  .field{margin-bottom:1.3rem;}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;}
+  input[type=text],input[type=email],select,textarea{
+    width:100%;border:1px solid var(--rule);background:var(--bg);color:var(--ink);
+    padding:.7rem .8rem;font-family:inherit;font-size:.95rem;border-radius:2px;
+  }
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--clay);outline-offset:1px;}
+  textarea{resize:vertical;min-height:7rem;}
+  .hint{font-size:.78rem;color:var(--ink-soft);margin-top:.35rem;}
+  .submit-btn{padding:.85rem 1.5rem;border:none;border-radius:2px;background:var(--ink);color:var(--paper);font-weight:500;font-size:.95rem;cursor:pointer;font-family:inherit;transition:background .15s;}
+  .submit-btn:hover{background:var(--clay);}
+  .form-status{margin-top:1rem;font-size:.88rem;color:var(--moss);display:none;}
+  .form-status.show{display:block;}
+
+  /* ---------- reviews ---------- */
+  .review-summary{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;}
+  .review-summary .avg{font-family:"Fraunces",serif;font-size:2.6rem;font-weight:460;}
+  .review-summary .stars{color:var(--gold);letter-spacing:.15em;font-size:1.1rem;}
+  .review-summary .count{color:var(--ink-soft);font-size:.9rem;}
+  .review-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:2.5rem;}
+  .review-card{border:1px solid var(--line);background:var(--paper);padding:1.2rem 1.4rem;}
+  .review-card .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.4rem;gap:1rem;}
+  .review-card b{font-weight:500;}
+  .review-card .stars{color:var(--gold);font-size:.9rem;white-space:nowrap;}
+  .review-card p{margin:0;color:var(--ink-soft);line-height:1.6;font-size:.94rem;}
+  .review-card .date{font-size:.76rem;color:var(--rule);}
+  .review-empty{border:1px dashed var(--rule);padding:1.6rem;text-align:center;color:var(--ink-soft);font-size:.92rem;margin-bottom:2.5rem;}
+
+  .star-input{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:.15rem;width:fit-content;}
+  .star-input input{position:absolute;opacity:0;pointer-events:none;}
+  .star-input label{cursor:pointer;font-size:1.6rem;color:var(--rule);margin:0;line-height:1;transition:color .1s;}
+  .star-input input:checked ~ label,
+  .star-input label:hover,
+  .star-input label:hover ~ label{color:var(--gold);}
+
+  .local-note{font-size:.8rem;color:var(--ink-soft);border-top:1px solid var(--line);margin-top:1.6rem;padding-top:1rem;}
+
+  footer{padding:2.5rem 0;display:flex;justify-content:space-between;align-items:center;font-size:.88rem;color:var(--ink-soft);border-top:1px solid var(--line);}
+  footer a{color:var(--clay);font-weight:500;}
+
+  @media (max-width:820px){
+    .links{display:none;}
+    .head-row{grid-template-columns:1fr;gap:.8rem;}
+    .services{grid-template-columns:1fr;}
+    .field-row{grid-template-columns:1fr;}
+    footer{flex-direction:column;gap:.6rem;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<header class="shell">
+  <nav>
+    <a class="mark" href="index.html">Evance <span>Odero</span></a>
+    <div class="links">
+      <a href="index.html#work">Projects</a>
+      <a href="index.html#about">About</a>
+      <a href="services.html" class="active">Services</a>
+    </div>
+    <a class="talk" href="mailto:oderoevance1003@gmail.com">Get in touch</a>
+  </nav>
+</header>
+
+<main>
+
+  <div class="shell page-hero">
+    <p class="kicker">Services &amp; reviews</p>
+    <h1>Order a project, or tell me how the last one went.</h1>
+    <p class="lede">Pick the kind of work you need below, send over the brief, and I'll follow up by email with scope and timing. If we've already worked together, I'd genuinely appreciate a review — it helps the next person know what to expect.</p>
+  </div>
+
+  <section id="services-list">
+    <div class="shell">
+      <div class="head-row">
+        <h2>What I offer</h2>
+        <p class="note">Four ways I usually get brought in. If your project is a mix of these, describe it in the form and I'll scope it properly.</p>
+      </div>
+      <div class="services">
+        <div class="service">
+          <h3>Data analysis &amp; reporting</h3>
+          <p>Cleaning, joining and making sense of messy spreadsheets or exports — with a clear write-up of what the data actually shows.</p>
+          <div class="service-meta"><b>Custom quote</b><button class="pick-btn" type="button" onclick="selectService('Data analysis & reporting')">Request this →</button></div>
+        </div>
+        <div class="service">
+          <h3>Dashboard &amp; BI build</h3>
+          <p>A Power BI or web dashboard your team can open daily, built on a data model that won't fall over when the source changes.</p>
+          <div class="service-meta"><b>Custom quote</b><button class="pick-btn" type="button" onclick="selectService('Dashboard & BI build')">Request this →</button></div>
+        </div>
+        <div class="service">
+          <h3>Forecasting &amp; automation</h3>
+          <p>A scheduled pipeline that pulls from your systems, runs a forecast or calculation, and delivers the result without manual work.</p>
+          <div class="service-meta"><b>Custom quote</b><button class="pick-btn" type="button" onclick="selectService('Forecasting & automation')">Request this →</button></div>
+        </div>
+        <div class="service">
+          <h3>Full-stack web app</h3>
+          <p>A small internal tool or customer-facing app — React front end, a proper backend and database behind it, built to be maintained.</p>
+          <div class="service-meta"><b>Custom quote</b><button class="pick-btn" type="button" onclick="selectService('Full-stack web app')">Request this →</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="order">
+    <div class="shell">
+      <div class="head-row">
+        <h2>Request a project</h2>
+        <p class="note">Submitted straight to the site's backend — I'll follow up by email with scope and timing.</p>
+      </div>
+
+      <div class="form-panel">
+        <form id="order-form">
+          <div class="field-row">
+            <div class="field">
+              <label for="o-name">Your name</label>
+              <input type="text" id="o-name" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="o-email">Your email</label>
+              <input type="email" id="o-email" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="o-service">Service</label>
+              <select id="o-service" required>
+                <option value="" disabled selected>Choose a service</option>
+                <option>Data analysis & reporting</option>
+                <option>Dashboard & BI build</option>
+                <option>Forecasting & automation</option>
+                <option>Full-stack web app</option>
+                <option>Something else</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="o-timeline">Timeline</label>
+              <select id="o-timeline">
+                <option>Flexible</option>
+                <option>Within a month</option>
+                <option>Within two weeks</option>
+                <option>Urgent</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="o-details">Project details</label>
+            <textarea id="o-details" required placeholder="What are you trying to solve, what data or systems are involved, and what should the finished thing let you do?"></textarea>
+          </div>
+
+          <button class="submit-btn" type="submit">Send request</button>
+          <p class="form-status" id="order-status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="shell">
+      <div class="head-row">
+        <h2>Client reviews</h2>
+        <p class="note">Left by people I've worked with. If that's you, add yours below.</p>
+      </div>
+
+      <div id="review-summary" class="review-summary" hidden>
+        <span class="avg" id="review-avg">0.0</span>
+        <div>
+          <div class="stars" id="review-avg-stars"></div>
+          <div class="count" id="review-count"></div>
+        </div>
+      </div>
+
+      <div id="review-list" class="review-list"></div>
+      <div id="review-empty" class="review-empty">No reviews yet — be the first to leave one.</div>
+
+      <div class="form-panel">
+        <form id="review-form">
+          <div class="field-row">
+            <div class="field">
+              <label for="r-name">Your name</label>
+              <input type="text" id="r-name" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label>Rating</label>
+              <div class="star-input" id="star-input">
+                <input type="radio" name="rating" id="star5" value="5"><label for="star5" title="5 stars">★</label>
+                <input type="radio" name="rating" id="star4" value="4"><label for="star4" title="4 stars">★</label>
+                <input type="radio" name="rating" id="star3" value="3"><label for="star3" title="3 stars">★</label>
+                <input type="radio" name="rating" id="star2" value="2"><label for="star2" title="2 stars">★</label>
+                <input type="radio" name="rating" id="star1" value="1"><label for="star1" title="1 star">★</label>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label for="r-comment">Review</label>
+            <textarea id="r-comment" required placeholder="What did we work on, and how did it go?"></textarea>
+          </div>
+          <button class="submit-btn" type="submit">Submit review</button>
+          <p class="form-status" id="review-status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="shell">
+  <span>© 2026 Evance Odero</span>
+  <a href="mailto:oderoevance1003@gmail.com">oderoevance1003@gmail.com</a>
+</footer>
+
+<script>
+  const API = ''; // same-origin, e.g. served from backend/public — see README
+
+  // ---------- order form: pre-select a service from a card ----------
+  function selectService(name){
+    const sel = document.getElementById('o-service');
+    sel.value = name;
+    document.getElementById('order').scrollIntoView({behavior:'smooth', block:'start'});
+    document.getElementById('o-name').focus({preventScroll:true});
+  }
+
+  // ---------- order form: submit to backend ----------
+  document.getElementById('order-form').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const status = document.getElementById('order-status');
+    const submitBtn = this.querySelector('.submit-btn');
+    const payload = {
+      name: document.getElementById('o-name').value.trim(),
+      email: document.getElementById('o-email').value.trim(),
+      service: document.getElementById('o-service').value,
+      timeline: document.getElementById('o-timeline').value,
+      details: document.getElementById('o-details').value.trim()
+    };
+
+    submitBtn.disabled = true;
+    status.classList.remove('show');
+
+    try {
+      const res = await fetch(`${API}/api/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        status.textContent = (data.errors || [data.error || 'Something went wrong.']).join(' ');
+      } else {
+        status.textContent = data.emailed
+          ? "Request received — I've been emailed and will get back to you directly."
+          : "Request received — saved on my end and I'll follow up by email.";
+        this.reset();
+      }
+    } catch (err) {
+      status.textContent = "Couldn't reach the server. Make sure the backend is running, then try again.";
+    }
+
+    status.classList.add('show');
+    submitBtn.disabled = false;
+  });
+
+  // ---------- reviews: backed by the API ----------
+  function starString(n){
+    return '★★★★★☆☆☆☆☆'.slice(5 - n, 10 - n);
+  }
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function formatDate(iso){
+    return new Date(iso).toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'});
+  }
+
+  async function loadReviews(){
+    const listEl = document.getElementById('review-list');
+    const emptyEl = document.getElementById('review-empty');
+    const summaryEl = document.getElementById('review-summary');
+
+    let data;
+    try {
+      const res = await fetch(`${API}/api/reviews`);
+      data = await res.json();
+    } catch (err) {
+      emptyEl.textContent = "Couldn't reach the server, so reviews can't load right now.";
+      emptyEl.style.display = 'block';
+      summaryEl.hidden = true;
+      return;
+    }
+
+    const { reviews, average, count } = data;
+    listEl.innerHTML = '';
+
+    if (!reviews || reviews.length === 0) {
+      emptyEl.textContent = 'No reviews yet — be the first to leave one.';
+      emptyEl.style.display = 'block';
+      summaryEl.hidden = true;
+      return;
+    }
+
+    emptyEl.style.display = 'none';
+    summaryEl.hidden = false;
+    document.getElementById('review-avg').textContent = average.toFixed(1);
+    document.getElementById('review-avg-stars').textContent = starString(Math.round(average));
+    document.getElementById('review-count').textContent = `${count} review${count === 1 ? '' : 's'}`;
+
+    reviews.forEach(r => {
+      const card = document.createElement('div');
+      card.className = 'review-card';
+      card.innerHTML = `
+        <div class="row">
+          <b>${escapeHtml(r.name)}</b>
+          <span class="stars">${starString(r.rating)}</span>
+        </div>
+        <p>${escapeHtml(r.comment)}</p>
+        <div class="date">${formatDate(r.date)}</div>
+      `;
+      listEl.appendChild(card);
+    });
+  }
+
+  document.getElementById('review-form').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const status = document.getElementById('review-status');
+    const submitBtn = this.querySelector('.submit-btn');
+    const ratingInput = document.querySelector('input[name="rating"]:checked');
+
+    status.classList.remove('show');
+
+    if (!ratingInput){
+      status.textContent = 'Pick a star rating before submitting.';
+      status.classList.add('show');
+      return;
+    }
+
+    const payload = {
+      name: document.getElementById('r-name').value.trim(),
+      rating: parseInt(ratingInput.value, 10),
+      comment: document.getElementById('r-comment').value.trim()
+    };
+
+    submitBtn.disabled = true;
+
+    try {
+      const res = await fetch(`${API}/api/reviews`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        status.textContent = (data.errors || [data.error || 'Something went wrong.']).join(' ');
+      } else {
+        status.textContent = 'Thanks — your review has been posted.';
+        this.reset();
+        await loadReviews();
+      }
+    } catch (err) {
+      status.textContent = "Couldn't reach the server. Make sure the backend is running, then try again.";
+    }
+
+    status.classList.add('show');
+    submitBtn.disabled = false;
+  });
+
+  loadReviews();
+</script>
+
+</body>
+</html>
