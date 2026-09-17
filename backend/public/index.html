@@ -155,7 +155,16 @@
     .case-role{grid-column:2;text-align:left;padding-top:0;}
     .process,.skills{grid-template-columns:1fr;gap:2rem;}
     .about{grid-template-columns:1fr;gap:1.6rem;}
-    .about-figure{aspect-ratio:16/9;}
+    .about-figure{
+      width:min(100%, 440px);
+      aspect-ratio:4/5;
+      margin:0 auto;
+      border-radius:8px;
+      overflow:hidden;
+    }
+    .about-figure img{object-position:center top;}
+    .about-figure .map-caption{left:1rem;right:1rem;bottom:1rem;}
+    .about-facts{grid-template-columns:1fr;}
     footer{flex-direction:column;gap:.6rem;align-items:flex-start;}
   }
 
