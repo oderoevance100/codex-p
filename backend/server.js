@@ -20,6 +20,7 @@ app.use(express.json());
 // needed. Point your real domain's static hosting at this same folder,
 // or keep using this server to host both.
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/picture', express.static(path.join(__dirname, 'picture')));
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 app.use('/api/reviews', reviewsRoutes);
